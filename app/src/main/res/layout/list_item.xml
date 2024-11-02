@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Foto da planta -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgPlanta"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/broto"
+            android:layout_marginEnd="16dp" />
+
+        <TextView
+            android:id="@+id/nomePlanta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgPlanta"
+            android:layout_alignTop="@id/imgPlanta"
+            android:text="Nome da Planta"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tempAr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nomePlanta"
+            android:layout_toEndOf="@id/imgPlanta"
+            android:text="ºC"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/umidadeAr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tempAr"
+            android:layout_toEndOf="@id/imgPlanta"
+            android:text="Umidade Ar %"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/qtdSolidosDissolvidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tempAr"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@id/umidadeAr"
+            android:text="TDS ppm"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/umidadeSolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nomePlanta"
+            android:layout_marginStart="97dp"
+            android:layout_marginTop="-3dp"
+            android:layout_toEndOf="@+id/tempAr"
+            android:text="Umidade Solo %"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
