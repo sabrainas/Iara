@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "193084393339",
+    "project_id": "iara-25a71",
+    "storage_bucket": "iara-25a71.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193084393339:android:e0b6f084447892aed75fde",
+        "android_client_info": {
+          "package_name": "br.edu.fatec.iara"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo7rsARGJnyNA5EqbOpnI3pQD98Va2TyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
