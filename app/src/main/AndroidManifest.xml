@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -11,9 +11,12 @@
         android:roundIcon="@mipmap/logo_iara_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SplashTheme"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
             android:name=".Home"
+            android:exported="false" />
+        <activity
+            android:name=".Registros"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

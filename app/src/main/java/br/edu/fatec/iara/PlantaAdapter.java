@@ -1,6 +1,7 @@
 package br.edu.fatec.iara;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import br.edu.fatec.iara.model.Planta;
@@ -33,6 +35,7 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         TextView umidadeAr = convertView.findViewById(R.id.umidadeAr);
         TextView qtdSolidosDissolvidos = convertView.findViewById(R.id.qtdSolidosDissolvidos);
         TextView umidadeSolo = convertView.findViewById(R.id.umidadeSolo);
+        TextView dataRegistro = convertView.findViewById(R.id.dataRegistro);
 
         // Preencher os dados
         nomePlanta.setText(planta.getNome());
@@ -40,6 +43,8 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         umidadeAr.setText(planta.getUmidadeAr() + " %");
         qtdSolidosDissolvidos.setText(planta.getTds() + " ppm");
         umidadeSolo.setText(planta.getUmidadeSolo() + " %");
+
+        dataRegistro.setText(planta.getDataRegistro());
 
         return convertView;
     }
