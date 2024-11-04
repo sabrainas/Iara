@@ -21,6 +21,8 @@ import br.edu.fatec.iara.model.Planta;
 
 public class Home extends AppCompatActivity {
 
+    private Button btnCadastrar;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,8 @@ public class Home extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_home);
 
+        btnCadastrar = findViewById(R.id.btnCadastrar);
+        
         // Aplicação dos insets para ajustar o padding e evitar sobreposição
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -66,5 +70,11 @@ public class Home extends AppCompatActivity {
             startActivity(intent);
         });
 
+    }
+
+    public void registrar(View v){
+
+        Intent it = new Intent(getApplicationContext(), Cadastro.class);
+        startActivity(it);
     }
 }
