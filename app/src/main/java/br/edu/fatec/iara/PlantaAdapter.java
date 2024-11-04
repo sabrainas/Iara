@@ -30,7 +30,9 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         }
 
         ShapeableImageView imgPlanta = convertView.findViewById(R.id.imgPlanta);
+
         TextView nomePlanta = convertView.findViewById(R.id.nomePlanta);
+
         TextView tempAr = convertView.findViewById(R.id.tempAr);
         TextView umidadeAr = convertView.findViewById(R.id.umidadeAr);
         TextView qtdSolidosDissolvidos = convertView.findViewById(R.id.qtdSolidosDissolvidos);

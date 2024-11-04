@@ -33,13 +33,13 @@ public class Registros extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_registros);
 
-        listView = findViewById(R.id.listViewPlantas);
+        listView = findViewById(R.id.listaRegistros);
         plantas = new ArrayList<>();
         adapter = new PlantaAdapter(this, plantas);
         listView.setAdapter(adapter);
         DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.registros), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
