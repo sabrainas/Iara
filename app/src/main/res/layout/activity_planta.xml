@@ -1,223 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/planta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
-    tools:context=".PlantaMain"
-    >
+    tools:context=".PlantaMain">
 
-    <LinearLayout
-        android:id="@+id/btnVoltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="10dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        tools:ignore="MissingConstraints"
-        android:onClick="voltar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        >
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/seta_esquerda"
-            android:contentDescription="Seta para voltar" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voltar para Home"
-            android:textColor="@android:color/black"
-            android:fontFamily="sans-serif-medium"
-            android:paddingStart="8dp" />
-    </LinearLayout>
-
-
-    <!-- Layout principal centralizado -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewPlanta"
+        <LinearLayout
+            android:id="@+id/btnVoltar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
-
-        <!-- Imagem da planta -->
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgPlanta"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/broto"
-             />
-
-        <!-- Grid de informações da planta -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-            <!-- Temperatura do Ar -->
-            <TextView
-                android:id="@+id/textTemperatura"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temperatura do Ar"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:id="@+id/iconTemperatura"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/temperatura"
-                app:tint="@android:color/black"
-                app:layout_constraintStart_toEndOf="@id/textTemperatura"
-                app:layout_constraintTop_toTopOf="@+id/textTemperatura"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/tempAr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25 ºC"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iconTemperatura"/>
-
-            <!-- Umidade do Ar -->
-            <TextView
-                android:id="@+id/textUmidadeAr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Umidade do Ar"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textTemperatura"
-                android:layout_marginTop="16dp"/>
-
-            <ImageView
-                android:id="@+id/iconUmidadeAr"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/umidade_ar"
-                app:tint="@android:color/black"
-                app:layout_constraintStart_toEndOf="@id/textUmidadeAr"
-                app:layout_constraintTop_toTopOf="@+id/textUmidadeAr"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/umidadeAr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="65 %"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iconUmidadeAr"/>
-
-            <!-- Umidade do Solo -->
-            <TextView
-                android:id="@+id/textUmidadeSolo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Umidade do Solo"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textUmidadeAr"
-                android:layout_marginTop="16dp"/>
-
-            <ImageView
-                android:id="@+id/iconUmidadeSolo"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/umidade"
-                app:tint="@android:color/black"
-                app:layout_constraintStart_toEndOf="@id/textUmidadeSolo"
-                app:layout_constraintTop_toTopOf="@+id/textUmidadeSolo"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/umidadeSolo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="45 %"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iconUmidadeSolo"/>
-
-            <!-- TDS -->
-            <TextView
-                android:id="@+id/textTDS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TDS"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textUmidadeSolo"
-                android:layout_marginTop="16dp"/>
-
-            <ImageView
-                android:id="@+id/iconTDS"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/medidor_solo"
-                app:tint="@android:color/black"
-                app:layout_constraintStart_toEndOf="@id/textTDS"
-                app:layout_constraintTop_toTopOf="@+id/textTDS"
-                android:layout_marginStart="8dp"/>
-
-            <TextView
-                android:id="@+id/qtdSolidosDissolvidos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1200 ppm"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iconTDS"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Botão Ver Registros -->
-        <Button
-            android:id="@+id/btnVerRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/dark_green"
-            android:text="    Ver Registros    "
-            android:textColor="@android:color/white"
+            android:orientation="horizontal"
             android:paddingVertical="10dp"
             android:paddingHorizontal="20dp"
-            android:fontFamily="sans-serif-medium" />
+            android:paddingTop="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="voltar"
+            android:layout_marginTop="16dp">
 
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/seta_esquerda"
+                android:contentDescription="Seta para voltar" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voltar para Home"
+                android:textColor="@android:color/black"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="8dp" />
+        </LinearLayout>
+
+        <!-- Layout principal centralizado -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginVertical="20dp">
+
+            <TextView
+                android:id="@+id/textViewPlanta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Imagem da planta -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgPlanta"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/broto" />
+
+            <!-- Grid de informações da planta -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <!-- Temperatura do Ar -->
+                <TextView
+                    android:id="@+id/textTemperatura"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperatura do Ar"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/iconTemperatura"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/temperatura"
+                    app:tint="@android:color/black"
+                    app:layout_constraintStart_toEndOf="@id/textTemperatura"
+                    app:layout_constraintTop_toTopOf="@+id/textTemperatura"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/tempAr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25 ºC"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iconTemperatura"/>
+
+                <!-- Umidade do Ar -->
+                <TextView
+                    android:id="@+id/textUmidadeAr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Umidade do Ar"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTemperatura"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:id="@+id/iconUmidadeAr"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/umidade_ar"
+                    app:tint="@android:color/black"
+                    app:layout_constraintStart_toEndOf="@id/textUmidadeAr"
+                    app:layout_constraintTop_toTopOf="@+id/textUmidadeAr"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/umidadeAr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="65 %"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iconUmidadeAr"/>
+
+                <!-- Umidade do Solo -->
+                <TextView
+                    android:id="@+id/textUmidadeSolo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Umidade do Solo"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textUmidadeAr"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:id="@+id/iconUmidadeSolo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/umidade"
+                    app:tint="@android:color/black"
+                    app:layout_constraintStart_toEndOf="@id/textUmidadeSolo"
+                    app:layout_constraintTop_toTopOf="@+id/textUmidadeSolo"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/umidadeSolo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="45 %"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iconUmidadeSolo"/>
+
+                <!-- TDS -->
+                <TextView
+                    android:id="@+id/textTDS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TDS"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textUmidadeSolo"
+                    android:layout_marginTop="16dp"/>
+
+                <ImageView
+                    android:id="@+id/iconTDS"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/medidor_solo"
+                    app:tint="@android:color/black"
+                    app:layout_constraintStart_toEndOf="@id/textTDS"
+                    app:layout_constraintTop_toTopOf="@+id/textTDS"
+                    android:layout_marginStart="8dp"/>
+
+                <TextView
+                    android:id="@+id/qtdSolidosDissolvidos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1200 ppm"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iconTDS"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Botão Ver Registros -->
+            <Button
+                android:id="@+id/btnVerRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/dark_green"
+                android:text="    Ver Registros    "
+                android:textColor="@android:color/white"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:fontFamily="sans-serif-medium" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
