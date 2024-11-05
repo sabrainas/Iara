@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class PlantaMain extends AppCompatActivity {
     private TextView umidadeSolo;
     private TextView tds;
     private Button btnVerRegistro;
-    private Button btnVoltar;
+    private LinearLayout btnVoltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,11 @@ public class PlantaMain extends AppCompatActivity {
 
     public void verRegistro(View view) {
         Intent intent = new Intent(PlantaMain.this, Registros.class);
+        startActivity(intent);
+    }
+
+    public void voltar(View view){
+        Intent intent = new Intent(PlantaMain.this, Home.class);
         startActivity(intent);
     }
 
