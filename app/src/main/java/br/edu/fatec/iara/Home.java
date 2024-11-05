@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -74,7 +75,7 @@ public class Home extends AppCompatActivity {
 
     public void registrar(View v){
 
-        Intent it = new Intent(getApplicationContext(), Cadastro.class);
-        startActivity(it);
+        //Intent it = new Intent(getApplicationContext(), Cadastro.class);
+        //startActivity(it);
     }
 }
