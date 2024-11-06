@@ -60,33 +60,45 @@ public class Registros extends AppCompatActivity {
     }
 
     private void loadPage() {
-        Query queryRef;
+      //  Query queryRef;
 
-        if (lastKey == null) {
+    /*    if (lastKey == null) {
             queryRef = dbReference.orderByKey().limitToLast(pageSize);
         } else {
             queryRef = dbReference.orderByKey().limitToLast(pageSize);
-        }
+        }*/
 
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 plantas.clear();
                 List<Planta> newPlants = new ArrayList<>();
 
+                int i = 0;
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.child("Data").getChildren()) {
+                        if(i >=500){
+                            break;
+                        }
                         String timestamp = snapshot.getKey();
-                        String nomePlanta = "Planta " + timestamp; // Exemplo de nome, ajuste conforme necessário
+                        String nomePlanta = dataSnapshot.child("Planta").child("1").getValue(String.class);
                         double temperaturaAr = dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Double.class);
                         int umidadeAr = dataSnapshot.child("Umidade_do_ar").child(timestamp).getValue(Integer.class);
                         int tds = dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class);
-                        int umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
-                        Date dataRegistro = snapshot.child("Data").child(timestamp).getValue(Date.class);
+                        //int umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
+                        int umidadeSolo;
+                        if(dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class) == null){
+                            umidadeSolo = 0;
+                        } else {
+                            umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
+                        }
+                        String dataRegistro = dataSnapshot.child("Data").child(timestamp).getValue(String.class);
 
                         Planta planta = new Planta(nomePlanta, temperaturaAr, umidadeAr, tds, umidadeSolo, dataRegistro);
                         newPlants.add(planta);
                         lastKey = timestamp;  // Atualiza a chave para a próxima consulta
+                        //plantas.add(planta);
+                        i++;
                     }
 
                     // Adicionar os novos registros no início (ordem decrescente)

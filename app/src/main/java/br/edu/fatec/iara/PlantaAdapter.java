@@ -24,8 +24,8 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         super(context, 0, plantas);
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+   /* @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());*/
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -52,12 +52,13 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         qtdSolidosDissolvidos.setText(planta.getTds() + " ppm");
         umidadeSolo.setText(planta.getUmidadeSolo() + " %");
 
-        if (planta.getDataRegistro() != null) {
+        /*if (planta.getDataRegistro() != null) {
             dataRegistro.setText(dateFormat.format(planta.getDataRegistro()));
         } else {
             dataRegistro.setText("Data não disponível");
-        }
+        }*/
 
+        dataRegistro.setText(planta.getDataRegistro());
         return convertView;
     }
 }

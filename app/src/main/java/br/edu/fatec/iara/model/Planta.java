@@ -9,12 +9,16 @@ public class Planta {
         private int umidadeAr;
         private int tds;
         private int umidadeSolo;
-        private Date dataRegistro;
+        private String dataRegistro;
 
         public Planta() {
         }
 
-        public Planta(String nome, double temperaturaAr, int umidadeAr, int tds, int umidadeSolo, Date dataRegistro) {
+        public Planta(String nome) {
+            this.nome = nome;
+        }
+
+        public Planta(String nome, double temperaturaAr, int umidadeAr, int tds, int umidadeSolo, String dataRegistro) {
             this.nome = nome;
             this.temperaturaAr = temperaturaAr;
             this.umidadeAr = umidadeAr;
@@ -29,5 +33,5 @@ public class Planta {
         public int getUmidadeAr() { return umidadeAr; }
         public int getTds() { return tds; }
         public int getUmidadeSolo() { return umidadeSolo; }
-        public Date getDataRegistro() { return dataRegistro; }
+        public String getDataRegistro() { return dataRegistro; }
 }

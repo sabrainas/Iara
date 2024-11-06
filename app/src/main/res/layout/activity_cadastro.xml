@@ -33,26 +33,13 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/editNomePlanta"
+            android:id="@+id/txtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Digite o nome da planta"
             android:inputType="text" />
 
         <!-- Campo de entrada para a Data de Plantio -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Data de Plantio"
-            android:textSize="16sp"
-            android:paddingTop="16dp" />
-        <EditText
-            android:id="@+id/editDataPlantio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="DD/MM/AAAA"
-            android:inputType="date" />
 
         <!-- Botão para salvar os dados -->
         <Button

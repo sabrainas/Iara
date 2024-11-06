@@ -2,18 +2,27 @@ package br.edu.fatec.iara;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.graphics.Insets;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +33,12 @@ import br.edu.fatec.iara.model.Planta;
 public class Home extends AppCompatActivity {
 
     private Button btnCadastrar;
+    private DatabaseReference dbReference;
+    private ListView listView;
+    private PlantaAdapter adapter;
+    private List<Planta> plantas;
+    private static final String TAG = "Home";
+
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +49,11 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         btnCadastrar = findViewById(R.id.btnCadastrar);
+        dbReference = FirebaseDatabase.getInstance().getReference();
+        listView = findViewById(R.id.listaPlantas);
+        plantas = new ArrayList<>();
+        adapter = new PlantaAdapter(this, plantas);
+        listView.setAdapter(adapter);
         
         // Aplicação dos insets para ajustar o padding e evitar sobreposição
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home), (v, insets) -> {
@@ -43,16 +63,66 @@ public class Home extends AppCompatActivity {
         });
 
         // Criando uma lista de objetos Planta
-        List<Planta> plantas = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        plantas.add(new Planta("Manjericão", 24.5, 60, 1000, 40, calendar.getTime()));
-        plantas.add(new Planta("Tomate", 22.3, 70, 900, 35, calendar.getTime()));
-        plantas.add(new Planta("Alecrim", 25.0, 55, 1100, 45, calendar.getTime()));
+        //List<Planta> plantas = new ArrayList<>();
+
+
+        //plantas.add(new Planta("Alface", 24.5, 60, 1000, 40, "07/11/2024"));
 
         // Configurando o ListView com o PlantaAdapter
-        PlantaAdapter adapter = new PlantaAdapter(this, plantas);
-        ListView listView = findViewById(R.id.listaPlantas);
-        listView.setAdapter(adapter);
+        /*PlantaAdapter adapter = new PlantaAdapter(this, plantas);
+        ListView listView = findViewById(R.id.listaPlantas);*/
+        //listView.setAdapter(adapter);
+
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //plantas.clear();
+                String timestamp = "";
+
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.child("Data").getChildren()) {
+                        timestamp = snapshot.getKey();
+                    }
+
+                    String nomePlanta = dataSnapshot.child("Planta").child("1").getValue(String.class);
+                    double temperaturaAr = dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Double.class);
+                    int umidadeAr;
+                    if(dataSnapshot.child("Umidade_do_ar").child(timestamp).getValue(Integer.class) == null){
+                        umidadeAr = 0;
+                    } else {
+                        umidadeAr = dataSnapshot.child("Umidade_do_ar").child(timestamp).getValue(Integer.class);
+                    }
+                    int tds;
+                    if(dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class) == null){
+                        tds = 0;
+                    } else {
+                        tds = dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class);
+                    }
+                    //int umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
+                    int umidadeSolo;
+                    if(dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class) == null){
+                        umidadeSolo = 0;
+                    } else {
+                        umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
+                    }
+                    String dataRegistro = dataSnapshot.child("Data").child(timestamp).getValue(String.class);
+
+                    Planta planta = new Planta(nomePlanta, temperaturaAr, umidadeAr, tds, umidadeSolo, dataRegistro);
+                    //newPlants.add(planta);
+                    //lastKey = timestamp;  // Atualiza a chave para a próxima consulta
+                    //plantas.add(planta);
+
+                    plantas.add(planta);
+                    // Adicionar os novos registros no início (ordem decrescente)
+                    //plantas.addAll(0, newPlants);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             // Obtenha o objeto Planta correspondente ao item clicado
@@ -72,12 +142,10 @@ public class Home extends AppCompatActivity {
             // Inicie a atividade PlantaMain
             startActivity(intent);
         });
-
     }
 
     public void registrar(View v){
-
-        //Intent it = new Intent(getApplicationContext(), Cadastro.class);
-        //startActivity(it);
+        Intent it = new Intent(getApplicationContext(), Cadastro.class);
+        startActivity(it);
     }
 }
