@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.graphics.Insets;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.edu.fatec.iara.model.Planta;
@@ -43,9 +44,10 @@ public class Home extends AppCompatActivity {
 
         // Criando uma lista de objetos Planta
         List<Planta> plantas = new ArrayList<>();
-        plantas.add(new Planta("Manjericão", 24.5, 60, 1000, 40, "01/11/2024"));
-        plantas.add(new Planta("Tomate", 22.3, 70, 900, 35, "01/11/2024"));
-        plantas.add(new Planta("Alecrim", 25.0, 55, 1100, 45, "01/11/2024"));
+        Calendar calendar = Calendar.getInstance();
+        plantas.add(new Planta("Manjericão", 24.5, 60, 1000, 40, calendar.getTime()));
+        plantas.add(new Planta("Tomate", 22.3, 70, 900, 35, calendar.getTime()));
+        plantas.add(new Planta("Alecrim", 25.0, 55, 1100, 45, calendar.getTime()));
 
         // Configurando o ListView com o PlantaAdapter
         PlantaAdapter adapter = new PlantaAdapter(this, plantas);

@@ -1,6 +1,7 @@
 package br.edu.fatec.iara.model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Planta {
         private String nome;
@@ -8,12 +9,12 @@ public class Planta {
         private int umidadeAr;
         private int tds;
         private int umidadeSolo;
-        private String dataRegistro;
+        private Date dataRegistro;
 
         public Planta() {
         }
 
-        public Planta(String nome, double temperaturaAr, int umidadeAr, int tds, int umidadeSolo, String dataRegistro) {
+        public Planta(String nome, double temperaturaAr, int umidadeAr, int tds, int umidadeSolo, Date dataRegistro) {
             this.nome = nome;
             this.temperaturaAr = temperaturaAr;
             this.umidadeAr = umidadeAr;
@@ -28,5 +29,5 @@ public class Planta {
         public int getUmidadeAr() { return umidadeAr; }
         public int getTds() { return tds; }
         public int getUmidadeSolo() { return umidadeSolo; }
-        public String getDataRegistro() { return dataRegistro; }
+        public Date getDataRegistro() { return dataRegistro; }
 }

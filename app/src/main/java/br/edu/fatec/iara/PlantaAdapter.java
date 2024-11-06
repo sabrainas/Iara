@@ -1,5 +1,6 @@
 package br.edu.fatec.iara;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 import br.edu.fatec.iara.model.Planta;
 
@@ -20,6 +23,9 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
     public PlantaAdapter(Context context, List<Planta> plantas) {
         super(context, 0, plantas);
     }
+
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,7 +52,11 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         qtdSolidosDissolvidos.setText(planta.getTds() + " ppm");
         umidadeSolo.setText(planta.getUmidadeSolo() + " %");
 
-        dataRegistro.setText(planta.getDataRegistro());
+        if (planta.getDataRegistro() != null) {
+            dataRegistro.setText(dateFormat.format(planta.getDataRegistro()));
+        } else {
+            dataRegistro.setText("Data não disponível");
+        }
 
         return convertView;
     }
