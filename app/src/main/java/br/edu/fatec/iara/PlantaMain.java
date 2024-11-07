@@ -36,6 +36,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.fatec.iara.model.Planta;
+
 public class PlantaMain extends AppCompatActivity {
 
     private TextView textViewPlanta;
@@ -109,47 +111,39 @@ public class PlantaMain extends AppCompatActivity {
     }
 
     private void loadChartData() {
-        dbReference.child("Data").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbReference.child("TDS").limitToFirst(100).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Entry> entries = new ArrayList<>();
                 int index = 0;
                 dataRegistroList.clear();
 
-                int i = 0;
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (i >= 500) {
-                            break;
-                        }
-                        String timestamp = snapshot.getKey();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String timestamp = snapshot.getKey();
 
-                        Integer tdsValue = dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class);
-                        if (tdsValue == null) {
-                            tdsValue = 0;
-                        }
-
-                        Log.d("DataSnapshot", "Timestamp: " + timestamp + ", TDS: " + tdsValue);
-
-                        String dataRegistro = dataSnapshot.child("Data").child(timestamp).getValue(String.class);
-                        dataRegistroList.add(dataRegistro);
-
-                        entries.add(new Entry(index++, tdsValue));
-                        lastKey = timestamp;
-                        i++;
+                    // Obtendo o valor de TDS
+                    Integer tdsValue = snapshot.getValue(Integer.class);
+                    if (tdsValue == null) {
+                        tdsValue = 0;
                     }
+
+                    // Armazenar o timestamp ou data correspondente no `dataRegistroList`
+                    dataRegistroList.add(timestamp);  // Ajuste se precisar de uma data formatada
+
+                    // Adicionar o valor ao gráfico
+                    entries.add(new Entry(index++, tdsValue));
                 }
 
+                // Atualizar o gráfico se houver dados
                 if (!entries.isEmpty()) {
                     LineDataSet dataSet = new LineDataSet(entries, "Crescimento da Planta (TDS)");
-                    dataSet.setColor(Color.GREEN);
-                    dataSet.setValueTextColor(Color.BLUE);
+                    dataSet.setColor(Color.parseColor("#319f67"));
+                    dataSet.setValueTextColor(Color.BLACK);
                     dataSet.setLineWidth(2f);
                     LineData lineData = new LineData(dataSet);
                     lineChart.setData(lineData);
 
                     configureChart();
-
                     lineChart.invalidate();
                 } else {
                     lineChart.setNoDataText("Nenhum dado disponível.");
@@ -163,8 +157,11 @@ public class PlantaMain extends AppCompatActivity {
         });
     }
 
+
     private void configureChart(){
         YAxis leftAxis = lineChart.getAxisLeft();
+        YAxis rightAxis = lineChart.getAxisRight();
+        rightAxis.setEnabled(false);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setAxisMaximum(1000f);
         leftAxis.setGranularity(100f);
