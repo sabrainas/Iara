@@ -27,11 +27,12 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="#56ff58"
         android:fontFamily="sans-serif-medium"
+        android:onClick="registrar"
         android:text="+"
         android:textAlignment="center"
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="registrar"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,7 @@ public class Home extends AppCompatActivity {
     private ListView listView;
     private PlantaAdapter adapter;
     private List<Planta> plantas;
-    private static final String TAG = "Home";
+    //private static final String TAG = "Home";
 
     
     @Override
@@ -76,16 +76,43 @@ public class Home extends AppCompatActivity {
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //plantas.clear();
+                plantas.clear();
                 String timestamp = "";
+                String escolhidoTimestamp = "";
+                String normalTimestamp = "";
+                String escolhido = "";
 
                 if (dataSnapshot.exists()) {
+                    int maior = 0;
                     for (DataSnapshot snapshot : dataSnapshot.child("Data").getChildren()) {
                         timestamp = snapshot.getKey();
+                        if (timestamp.contains("_")) {
+                            escolhidoTimestamp = timestamp.split("_")[0];
+                            String resto = timestamp.split("_")[1];
+
+                            if ((Integer.parseInt(escolhidoTimestamp) > maior)) {
+                                maior = Integer.parseInt(escolhidoTimestamp);
+                                escolhido = resto;
+                            }
+                        } else {
+                            normalTimestamp = timestamp;
+                        }
+                    }
+                    if(normalTimestamp == ""){
+                        timestamp = String.valueOf(maior);
+                        timestamp = timestamp + "_" + escolhido;
+                    } else {
+                        timestamp = normalTimestamp;
                     }
 
+                    Log.i("HOME", timestamp);
                     String nomePlanta = dataSnapshot.child("Planta").child("1").getValue(String.class);
-                    double temperaturaAr = dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Double.class);
+                    Double temperaturaAr;
+                    if(dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Integer.class) == null){
+                        temperaturaAr = 0.0;
+                    } else {
+                        temperaturaAr = dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Double.class);
+                    }
                     int umidadeAr;
                     if(dataSnapshot.child("Umidade_do_ar").child(timestamp).getValue(Integer.class) == null){
                         umidadeAr = 0;

@@ -36,6 +36,13 @@ public class Registros extends AppCompatActivity {
     private ProgressBar progressBar;
     private LinearLayout btnVoltarPlanta;
 
+    String nomePlanta;
+    double temperaturaArValue;
+    int umidadeArValue;
+    int umidadeSoloValue;
+    int tdsValue;
+    String dataRegistro;
+
     private DatabaseReference dbReference;
     private int pageSize = 20;
     private String lastKey = null;
@@ -55,6 +62,14 @@ public class Registros extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         dbReference = FirebaseDatabase.getInstance().getReference();
+
+        Intent intent = getIntent();
+        nomePlanta = intent.getStringExtra("nomePlanta");
+        temperaturaArValue = intent.getDoubleExtra("temperaturaAr", 0);
+        umidadeArValue = intent.getIntExtra("umidadeAr", 0);
+        umidadeSoloValue = intent.getIntExtra("umidadeSolo", 0);
+        tdsValue = intent.getIntExtra("tds", 0);
+        dataRegistro = intent.getStringExtra("dataRegistro");
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.registros), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -124,6 +139,12 @@ public class Registros extends AppCompatActivity {
 
     public void voltar(View view) {
         Intent intent = new Intent(Registros.this, PlantaMain.class);
+        intent.putExtra("nomePlanta", nomePlanta);
+        intent.putExtra("temperaturaAr", temperaturaArValue);
+        intent.putExtra("umidadeAr", umidadeArValue);
+        intent.putExtra("umidadeSolo", umidadeSoloValue);
+        intent.putExtra("tds", tdsValue);
+        intent.putExtra("dataRegistro", dataRegistro);
         startActivity(intent);
     }
 }

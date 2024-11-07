@@ -50,7 +50,7 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         tempAr.setText(String.format("%.1f ºC", planta.getTemperaturaAr()));
         umidadeAr.setText(planta.getUmidadeAr() + " %");
         qtdSolidosDissolvidos.setText(planta.getTds() + " ppm");
-        umidadeSolo.setText(planta.getUmidadeSolo() + " %");
+        umidadeSolo.setText(planta.getUmidadeSolo() + "");
 
         /*if (planta.getDataRegistro() != null) {
             dataRegistro.setText(dateFormat.format(planta.getDataRegistro()));

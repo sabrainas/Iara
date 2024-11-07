@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Planta {
         private String nome;
-        private double temperaturaAr;
+        private Double temperaturaAr;
         private int umidadeAr;
         private int tds;
         private int umidadeSolo;
@@ -29,7 +29,7 @@ public class Planta {
 
         // Getters
         public String getNome() { return nome; }
-        public double getTemperaturaAr() { return temperaturaAr; }
+        public Double getTemperaturaAr() { return temperaturaAr; }
         public int getUmidadeAr() { return umidadeAr; }
         public int getTds() { return tds; }
         public int getUmidadeSolo() { return umidadeSolo; }

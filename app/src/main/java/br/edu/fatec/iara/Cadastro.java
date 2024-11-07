@@ -34,7 +34,7 @@ public class Cadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cadastro);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cadastro), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -50,6 +50,11 @@ public class Cadastro extends AppCompatActivity {
     }
 
     private void adicionarPlanta(String nome) {
+        if (!txtNome.getText().toString().isEmpty()) {
+            adicionarPlanta(txtNome.getText().toString());
+        } else {
+            Toast.makeText(Cadastro.this, "Digite o nome da planta", Toast.LENGTH_SHORT).show();
+        }
         // Busca o último ID (se o Firebase for configurado com IDs numéricos sequenciais)
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -57,7 +62,7 @@ public class Cadastro extends AppCompatActivity {
                 String timestamp = "";
 
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.child("Data").getChildren()) {
+                    for (DataSnapshot snapshot : dataSnapshot.child("Planta").getChildren()) {
                         timestamp = snapshot.getKey();
                     }
 
@@ -69,7 +74,7 @@ public class Cadastro extends AppCompatActivity {
                     Planta novaPlanta = new Planta(nome);
 
                     // Insere a nova planta com o ID incrementado
-                    dbReference.child(String.valueOf(nextId)).setValue(novaPlanta)
+                    dbReference.child(String.valueOf(nextId)).setValue(nome)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(Cadastro.this, "Planta adicionada com sucesso!", Toast.LENGTH_SHORT).show();
                         })

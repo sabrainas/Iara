@@ -47,6 +47,12 @@ public class PlantaMain extends AppCompatActivity {
     private TextView tds;
     private Button btnVerRegistro;
     private LinearLayout btnVoltarHome;
+    String nomePlanta;
+    double temperaturaArValue;
+    int umidadeArValue;
+    int umidadeSoloValue;
+    int tdsValue;
+    String dataRegistro;
 
     private LineChart lineChart; //grafico
     private DatabaseReference dbReference;
@@ -82,18 +88,18 @@ public class PlantaMain extends AppCompatActivity {
         loadChartData();
         // Receber os dados enviados pela atividade anterior
         Intent intent = getIntent();
-        String nomePlanta = intent.getStringExtra("nomePlanta");
-        double temperaturaArValue = intent.getDoubleExtra("temperaturaAr", 0);
-        int umidadeArValue = intent.getIntExtra("umidadeAr", 0);
-        int umidadeSoloValue = intent.getIntExtra("umidadeSolo", 0);
-        int tdsValue = intent.getIntExtra("tds", 0);
-        String dataRegistro = intent.getStringExtra("dataRegistro");
+        nomePlanta = intent.getStringExtra("nomePlanta");
+        temperaturaArValue = intent.getDoubleExtra("temperaturaAr", 0);
+        umidadeArValue = intent.getIntExtra("umidadeAr", 0);
+        umidadeSoloValue = intent.getIntExtra("umidadeSolo", 0);
+        tdsValue = intent.getIntExtra("tds", 0);
+        dataRegistro = intent.getStringExtra("dataRegistro");
 
         // Exibir os dados na interface
         textViewPlanta.setText("Planta: " + nomePlanta);
         tempAr.setText(temperaturaArValue + " ºC");
         umidadeAr.setText(umidadeArValue + " %");
-        umidadeSolo.setText(umidadeSoloValue + " %");
+        umidadeSolo.setText(umidadeSoloValue + "");
         tds.setText(tdsValue + " ppm");
 
 
@@ -184,6 +190,14 @@ public class PlantaMain extends AppCompatActivity {
 
     public void verRegistro(View view) {
         Intent intent = new Intent(PlantaMain.this, Registros.class);
+
+        // Envie dados da planta selecionada (como nome) para a próxima atividade
+        intent.putExtra("nomePlanta", nomePlanta);
+        intent.putExtra("temperaturaAr", temperaturaArValue);
+        intent.putExtra("umidadeAr", umidadeArValue);
+        intent.putExtra("umidadeSolo", umidadeSoloValue);
+        intent.putExtra("tds", tdsValue);
+        intent.putExtra("dataRegistro", dataRegistro);
         startActivity(intent);
     }
 
