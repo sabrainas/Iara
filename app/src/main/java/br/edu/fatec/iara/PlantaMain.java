@@ -78,11 +78,9 @@ public class PlantaMain extends AppCompatActivity {
         tds = findViewById(R.id.qtdSolidosDissolvidos);
         btnVerRegistro = findViewById(R.id.btnVerRegistro);
         btnVoltarHome = findViewById(R.id.btnVoltarHome);
-
         lineChart = findViewById(R.id.lineChart); //grafico
 
         dbReference = FirebaseDatabase.getInstance().getReference();
-
         setupLineChart();
 
         loadChartData();
@@ -117,7 +115,7 @@ public class PlantaMain extends AppCompatActivity {
     }
 
     private void loadChartData() {
-        dbReference.child("TDS").limitToFirst(100).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbReference.child("TDS").limitToFirst(150).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Entry> entries = new ArrayList<>();
@@ -205,6 +203,7 @@ public class PlantaMain extends AppCompatActivity {
         Intent intent = new Intent(PlantaMain.this, Home.class);
         startActivity(intent);
     }
+
 
     public void btnSair(View view) {
         finish();

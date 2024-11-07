@@ -58,7 +58,7 @@ public class Registros extends AppCompatActivity {
         btnVoltarPlanta = findViewById(R.id.btnVoltarPlanta);
 
         plantas = new ArrayList<>();
-        adapter = new PlantaAdapter(this, plantas);
+        adapter = new PlantaAdapter(this, plantas, true);
         listView.setAdapter(adapter);
 
         dbReference = FirebaseDatabase.getInstance().getReference();
@@ -99,29 +99,43 @@ public class Registros extends AppCompatActivity {
                 int i = 0;
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.child("Data").getChildren()) {
-                        if(i >=500){
+                        if (i >= 500) {
                             break;
                         }
                         String timestamp = snapshot.getKey();
                         String nomePlanta = dataSnapshot.child("Planta").child("1").getValue(String.class);
-                        double temperaturaAr = dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Double.class);
-                        int umidadeAr = dataSnapshot.child("Umidade_do_ar").child(timestamp).getValue(Integer.class);
-                        int tds = dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class);
-                        //int umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
-                        int umidadeSolo;
-                        if(dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class) == null){
-                            umidadeSolo = 0;
-                        } else {
-                            umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
+
+                        Double temperaturaAr = dataSnapshot.child("Temperatura_do_ar").child(timestamp).getValue(Double.class);
+                        if (temperaturaAr == null) {
+                            temperaturaAr = 0.0;  // Valor padrão se for null
                         }
+
+                        Integer umidadeAr = dataSnapshot.child("Umidade_do_ar").child(timestamp).getValue(Integer.class);
+                        if (umidadeAr == null) {
+                            umidadeAr = 0;  // Valor padrão se for null
+                        }
+
+                        Integer tds = dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class);
+                        if (tds == null) {
+                            tds = 0;  // Valor padrão se for null
+                        }
+
+                        Integer umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
+                        if (umidadeSolo == null) {
+                            umidadeSolo = 0;  // Valor padrão se for null
+                        }
+
                         String dataRegistro = dataSnapshot.child("Data").child(timestamp).getValue(String.class);
+                        if (dataRegistro == null) {
+                            dataRegistro = "";  // Valor padrão se for null
+                        }
 
                         Planta planta = new Planta(nomePlanta, temperaturaAr, umidadeAr, tds, umidadeSolo, dataRegistro);
                         newPlants.add(planta);
-                        lastKey = timestamp;  // Atualiza a chave para a próxima consulta
-                        //plantas.add(planta);
+                        lastKey = timestamp;
                         i++;
                     }
+
 
                     // Adicionar os novos registros no início (ordem decrescente)
                     plantas.addAll(0, newPlants);

@@ -54,12 +54,6 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/data_limite"
-                        app:tint="#888888" />
-
                     <TextView
                         android:id="@+id/dataRegistro"
                         android:layout_width="wrap_content"
@@ -68,6 +62,16 @@
                         android:text="Data de Registro"
                         android:textColor="#888888"
                         android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/btnExcluir"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/excluir"
+                        android:onClick="excluirRegistro"
+                        android:layout_margin="10dp"
+                        android:visibility="gone"
+                        />
                 </LinearLayout>
             </LinearLayout>
 

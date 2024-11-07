@@ -7,9 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -20,8 +25,13 @@ import br.edu.fatec.iara.model.Planta;
 
 public class PlantaAdapter extends ArrayAdapter<Planta> {
 
-    public PlantaAdapter(Context context, List<Planta> plantas) {
+    private boolean exibirBotaoExcluir;
+    private List<Planta> plantas;
+
+    public PlantaAdapter(Context context, List<Planta> plantas, boolean exibirBotaoExcluir) {
         super(context, 0, plantas);
+        this.plantas = plantas;
+        this.exibirBotaoExcluir = exibirBotaoExcluir;
     }
 
    /* @SuppressLint("SimpleDateFormat")
@@ -52,11 +62,19 @@ public class PlantaAdapter extends ArrayAdapter<Planta> {
         qtdSolidosDissolvidos.setText(planta.getTds() + " ppm");
         umidadeSolo.setText(planta.getUmidadeSolo() + "");
 
-        /*if (planta.getDataRegistro() != null) {
-            dataRegistro.setText(dateFormat.format(planta.getDataRegistro()));
-        } else {
-            dataRegistro.setText("Data não disponível");
-        }*/
+        ImageView btnExcluir = convertView.findViewById(R.id.btnExcluir);
+        btnExcluir.setVisibility(exibirBotaoExcluir ? View.VISIBLE : View.GONE);
+
+        btnExcluir.setOnClickListener(v -> {
+            DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
+            dbReference.child("Data").child(planta.getDataRegistro()).removeValue().addOnSuccessListener(aVoid -> {
+                plantas.remove(position);
+                notifyDataSetChanged();
+                Toast.makeText(getContext(), "Registro excluído com sucesso", Toast.LENGTH_SHORT).show();
+            }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(), "Erro ao excluir registro", Toast.LENGTH_SHORT).show();
+            });
+        });
 
         dataRegistro.setText(planta.getDataRegistro());
         return convertView;

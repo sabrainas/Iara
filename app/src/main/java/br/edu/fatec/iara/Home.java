@@ -52,7 +52,7 @@ public class Home extends AppCompatActivity {
         dbReference = FirebaseDatabase.getInstance().getReference();
         listView = findViewById(R.id.listaPlantas);
         plantas = new ArrayList<>();
-        adapter = new PlantaAdapter(this, plantas);
+        adapter = new PlantaAdapter(this, plantas, false);
         listView.setAdapter(adapter);
         
         // Aplicação dos insets para ajustar o padding e evitar sobreposição
