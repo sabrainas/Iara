@@ -1,9 +1,12 @@
 package br.edu.fatec.iara;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -31,6 +34,7 @@ public class Registros extends AppCompatActivity {
     private PlantaAdapter adapter;
     private List<Planta> plantas;
     private ProgressBar progressBar;
+    private LinearLayout btnVoltarPlanta;
 
     private DatabaseReference dbReference;
     private int pageSize = 20;
@@ -44,6 +48,8 @@ public class Registros extends AppCompatActivity {
 
         listView = findViewById(R.id.listaRegistros);
         progressBar = findViewById(R.id.progressBar);
+        btnVoltarPlanta = findViewById(R.id.btnVoltarPlanta);
+
         plantas = new ArrayList<>();
         adapter = new PlantaAdapter(this, plantas);
         listView.setAdapter(adapter);
@@ -57,6 +63,7 @@ public class Registros extends AppCompatActivity {
         });
         progressBar.setVisibility(View.VISIBLE);
         loadPage();
+        btnVoltarPlanta.setOnClickListener(this::voltar);
     }
 
     private void loadPage() {
@@ -113,5 +120,10 @@ public class Registros extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    public void voltar(View view) {
+        Intent intent = new Intent(Registros.this, PlantaMain.class);
+        startActivity(intent);
     }
 }

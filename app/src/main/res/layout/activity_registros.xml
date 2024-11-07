@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/registros"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
+    android:orientation="vertical"
     tools:context=".Registros">
+
+    <LinearLayout
+        android:id="@+id/btnVoltarPlanta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="10dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="voltar"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/seta_esquerda"
+            android:contentDescription="Seta para voltar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voltar"
+            android:textColor="@android:color/black"
+            android:fontFamily="sans-serif-medium"
+            android:paddingStart="8dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listaRegistros"
@@ -27,4 +57,4 @@
         android:indeterminateTint="@color/dark_green"
         android:visibility="gone"/>
 
-</RelativeLayout>
+</LinearLayout>

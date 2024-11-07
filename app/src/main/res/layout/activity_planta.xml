@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/btnVoltar"
+            android:id="@+id/btnVoltarHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -50,7 +50,6 @@
             android:orientation="vertical"
             android:padding="16dp"
             android:layout_marginVertical="20dp">
-
             <TextView
                 android:id="@+id/textViewPlanta"
                 android:layout_width="wrap_content"
@@ -67,7 +66,8 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:src="@drawable/broto" />
+                android:src="@drawable/adulto"
+                />
 
             <!-- Grid de informações da planta -->
             <androidx.constraintlayout.widget.ConstraintLayout

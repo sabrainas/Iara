@@ -3,22 +3,36 @@ package br.edu.fatec.iara;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.firebase.Firebase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +44,11 @@ public class PlantaMain extends AppCompatActivity {
     private TextView umidadeSolo;
     private TextView tds;
     private Button btnVerRegistro;
-    private LinearLayout btnVoltar;
+    private LinearLayout btnVoltarHome;
 
     private LineChart lineChart; //grafico
+    private DatabaseReference dbReference;
+    private String lastKey = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +69,15 @@ public class PlantaMain extends AppCompatActivity {
         umidadeSolo = findViewById(R.id.umidadeSolo);
         tds = findViewById(R.id.qtdSolidosDissolvidos);
         btnVerRegistro = findViewById(R.id.btnVerRegistro);
-        btnVoltar = findViewById(R.id.btnVoltar);
+        btnVoltarHome = findViewById(R.id.btnVoltarHome);
 
         lineChart = findViewById(R.id.lineChart); //grafico
 
+        dbReference = FirebaseDatabase.getInstance().getReference();
+
+        setupLineChart();
+
+        loadChartData();
         // Receber os dados enviados pela atividade anterior
         Intent intent = getIntent();
         String nomePlanta = intent.getStringExtra("nomePlanta");
@@ -73,37 +94,96 @@ public class PlantaMain extends AppCompatActivity {
         umidadeSolo.setText(umidadeSoloValue + " %");
         tds.setText(tdsValue + " ppm");
 
-        setupLineChart();
 
         // Configurar listeners para os botões
         btnVerRegistro.setOnClickListener(this::verRegistro);
-        btnVoltar.setOnClickListener(this::btnSair);
+        btnVoltarHome.setOnClickListener(this::voltar);
     }
+
+    private List<String> dataRegistroList = new ArrayList<>();
+
     private void setupLineChart() {
-        List<Entry> entries = new ArrayList<>();
-
-        // Dados de exemplo - você pode substituí-los com dados reais
-        entries.add(new Entry(0, 2)); // Ponto 1 (x=0, y=2)
-        entries.add(new Entry(1, 4)); // Ponto 2 (x=1, y=4)
-        entries.add(new Entry(2, 6)); // Ponto 3 (x=2, y=6)
-        entries.add(new Entry(3, 8)); // Ponto 4 (x=3, y=8)
-
-        LineDataSet dataSet = new LineDataSet(entries, "Predição de Crescimento");
-        dataSet.setColor(Color.GREEN);
-        dataSet.setValueTextColor(Color.BLACK); // Cor dos valores
-        dataSet.setLineWidth(2f);
-
-        LineData lineData = new LineData(dataSet);
-        lineChart.setData(lineData);
-
-        // Customização
-        Description description = new Description();
-        description.setText("Crescimento ao longo do tempo");
-        lineChart.setDescription(description);
-
-        lineChart.invalidate(); // Atualizar o gráfico
+        lineChart.setNoDataText("Carregando dados...");
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setDrawGridBackground(false);
     }
 
+    private void loadChartData() {
+        dbReference.child("Data").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Entry> entries = new ArrayList<>();
+                int index = 0;
+                dataRegistroList.clear();
+
+                int i = 0;
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (i >= 500) {
+                            break;
+                        }
+                        String timestamp = snapshot.getKey();
+
+                        Integer tdsValue = dataSnapshot.child("TDS").child(timestamp).getValue(Integer.class);
+                        if (tdsValue == null) {
+                            tdsValue = 0;
+                        }
+
+                        Log.d("DataSnapshot", "Timestamp: " + timestamp + ", TDS: " + tdsValue);
+
+                        String dataRegistro = dataSnapshot.child("Data").child(timestamp).getValue(String.class);
+                        dataRegistroList.add(dataRegistro);
+
+                        entries.add(new Entry(index++, tdsValue));
+                        lastKey = timestamp;
+                        i++;
+                    }
+                }
+
+                if (!entries.isEmpty()) {
+                    LineDataSet dataSet = new LineDataSet(entries, "Crescimento da Planta (TDS)");
+                    dataSet.setColor(Color.GREEN);
+                    dataSet.setValueTextColor(Color.BLUE);
+                    dataSet.setLineWidth(2f);
+                    LineData lineData = new LineData(dataSet);
+                    lineChart.setData(lineData);
+
+                    configureChart();
+
+                    lineChart.invalidate();
+                } else {
+                    lineChart.setNoDataText("Nenhum dado disponível.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Erro ao carregar dados: " + error.getMessage());
+            }
+        });
+    }
+
+    private void configureChart(){
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(1000f);
+        leftAxis.setGranularity(100f);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(){
+            @Override
+            public String getFormattedValue(float value, AxisBase axis){
+                int index = Math.round(value);
+                if (index >= 0 && index < dataRegistroList.size()) {
+                    return dataRegistroList.get(index);
+                }
+                return "";
+            }
+        });
+    }
 
     public void verRegistro(View view) {
         Intent intent = new Intent(PlantaMain.this, Registros.class);
