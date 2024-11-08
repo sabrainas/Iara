@@ -42,6 +42,7 @@ public class Registros extends AppCompatActivity {
     int umidadeSoloValue;
     int tdsValue;
     String dataRegistro;
+    int diasPrevisao;
 
     private DatabaseReference dbReference;
     private int pageSize = 20;
@@ -70,6 +71,7 @@ public class Registros extends AppCompatActivity {
         umidadeSoloValue = intent.getIntExtra("umidadeSolo", 0);
         tdsValue = intent.getIntExtra("tds", 0);
         dataRegistro = intent.getStringExtra("dataRegistro");
+        diasPrevisao = intent.getIntExtra("diasPrevisao", 0);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.registros), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -159,6 +161,7 @@ public class Registros extends AppCompatActivity {
         intent.putExtra("umidadeSolo", umidadeSoloValue);
         intent.putExtra("tds", tdsValue);
         intent.putExtra("dataRegistro", dataRegistro);
+        intent.putExtra("diasPrevisao", diasPrevisao);
         startActivity(intent);
     }
 }

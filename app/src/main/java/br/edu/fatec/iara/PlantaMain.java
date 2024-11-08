@@ -45,6 +45,7 @@ public class PlantaMain extends AppCompatActivity {
     private TextView umidadeAr;
     private TextView umidadeSolo;
     private TextView tds;
+    private TextView diasPrevisao;
     private Button btnVerRegistro;
     private LinearLayout btnVoltarHome;
     String nomePlanta;
@@ -53,6 +54,7 @@ public class PlantaMain extends AppCompatActivity {
     int umidadeSoloValue;
     int tdsValue;
     String dataRegistro;
+    int diasValue;
 
     private LineChart lineChart; //grafico
     private DatabaseReference dbReference;
@@ -79,6 +81,7 @@ public class PlantaMain extends AppCompatActivity {
         btnVerRegistro = findViewById(R.id.btnVerRegistro);
         btnVoltarHome = findViewById(R.id.btnVoltarHome);
         lineChart = findViewById(R.id.lineChart); //grafico
+        diasPrevisao = findViewById(R.id.diaPrevisao);
 
         dbReference = FirebaseDatabase.getInstance().getReference();
         setupLineChart();
@@ -92,6 +95,7 @@ public class PlantaMain extends AppCompatActivity {
         umidadeSoloValue = intent.getIntExtra("umidadeSolo", 0);
         tdsValue = intent.getIntExtra("tds", 0);
         dataRegistro = intent.getStringExtra("dataRegistro");
+        diasValue = intent.getIntExtra("diasPrevisao", 0);
 
         // Exibir os dados na interface
         textViewPlanta.setText("Planta: " + nomePlanta);
@@ -99,6 +103,7 @@ public class PlantaMain extends AppCompatActivity {
         umidadeAr.setText(umidadeArValue + " %");
         umidadeSolo.setText(umidadeSoloValue + "");
         tds.setText(tdsValue + " ppm");
+        diasPrevisao.setText(diasValue + " dias");
 
 
         // Configurar listeners para os botões
@@ -196,6 +201,7 @@ public class PlantaMain extends AppCompatActivity {
         intent.putExtra("umidadeSolo", umidadeSoloValue);
         intent.putExtra("tds", tdsValue);
         intent.putExtra("dataRegistro", dataRegistro);
+        intent.putExtra("diasPrevisao", diasValue);
         startActivity(intent);
     }
 

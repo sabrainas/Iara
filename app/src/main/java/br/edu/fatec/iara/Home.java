@@ -39,6 +39,7 @@ public class Home extends AppCompatActivity {
     private List<Planta> plantas;
     //private static final String TAG = "Home";
 
+    public double diasPrevisao;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +133,12 @@ public class Home extends AppCompatActivity {
                     } else {
                         umidadeSolo = dataSnapshot.child("Umidade_do_solo").child(timestamp).getValue(Integer.class);
                     }
+
+                    /*if(dataSnapshot.child("Dias previsão").child(timestamp).getValue(Double.class) == null){
+                        diasPrevisao = 0.0;
+                    } else {
+                        diasPrevisao = dataSnapshot.child("Dias previsão").child(timestamp).getValue(Double.class);
+                    }*/
                     String dataRegistro = dataSnapshot.child("Data").child(timestamp).getValue(String.class);
 
                     Planta planta = new Planta(nomePlanta, temperaturaAr, umidadeAr, tds, umidadeSolo, dataRegistro);
@@ -165,6 +172,7 @@ public class Home extends AppCompatActivity {
             intent.putExtra("umidadeSolo", plantaSelecionada.getUmidadeSolo());
             intent.putExtra("tds", plantaSelecionada.getTds());
             intent.putExtra("dataRegistro", plantaSelecionada.getDataRegistro());
+            intent.putExtra("diasPrevisao", 22);
 
             // Inicie a atividade PlantaMain
             startActivity(intent);
